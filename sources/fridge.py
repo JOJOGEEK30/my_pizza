@@ -40,6 +40,14 @@ class Fridge:
     def is_empty(self) -> bool:
         return all(v == 0 for v in self._ingredients.values())
 
+    @property
+    def total_sauce_unit(self) -> int:
+        return sum(self._sauces.values())
+
+    def empty_sauce_jars(self):
+        for name in self._sauces:
+            self._sauces[name] = 0
+
     def use_sauce(self, name: str):
         if name not in self._sauces:
             raise UnknownIngredientException('sauce ' + name)

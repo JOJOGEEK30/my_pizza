@@ -21,7 +21,7 @@ class PizzaMaker:
             return f'I don\'t have enough "{str(e)}"'
         return None
 
-    def __apply_sauce(self, pizza: Dict):
+    def __apply_sauce(self, pizza: Dict) -> Optional[str]:
         try:
             sauce = pizza['sauce']
         except KeyError:
@@ -29,9 +29,10 @@ class PizzaMaker:
         try:
             self._fridge.use_sauce(sauce)
         except NotEnoughSauceException:
-            print(f'Not enough sauce "{sauce}". Refilling...')
             self._fridge.refill_sauce()
             self.__apply_sauce(pizza)
+            return 'Sorry for the wait, I had to refill the sauce jar.'
+        return
 
     def take_an_order(self, name: str) -> Tuple[bool, Optional[str]]:
         if name not in RECIPES:
@@ -42,5 +43,5 @@ class PizzaMaker:
         error = self.__try_to_get_ingredients(ingredients)
         if error is not None:
             return False, error
-        self.__apply_sauce(RECIPES[name])
-        return True, None
+        message = self.__apply_sauce(RECIPES[name])
+        return True, message

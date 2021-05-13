@@ -16,6 +16,9 @@ def handle_customer_queue(amount: int, maker: PizzaMaker):
         status, message = maker.take_an_order(pizza)
         if not status:
             print('Maker: Sorry but', message)
+            print('Customer {:02d}: :\'('.format(customer_id))
         else:
             print(f'Maker: Here is your "{pizza}" !')
+            if message is not None:
+                print('Maker:', message)
             print('Customer {:02d}: Thank you !'.format(customer_id))
