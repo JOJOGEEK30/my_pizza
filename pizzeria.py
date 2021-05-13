@@ -5,11 +5,11 @@ from sources.customer import handle_customer_queue
 
 
 def main():
-    fridge = Fridge(15)
+    fridge = Fridge(default_ingredients=30)
     maker = PizzaMaker(fridge)
     print('Maker: Welcome dear customer, the pizzeria is open !')
     try:
-        handle_customer_queue(10, maker)
+        handle_customer_queue(15, maker)
     except Exception as e:
         print('Maker: Sorry something went wrong. We have to close earlier !')
         print('>>>', e)

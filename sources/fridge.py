@@ -4,6 +4,8 @@ from typing import Dict
 ALL_INGREDIENTS = ('ham', 'mozzarella', 'parmesan', 'gorgonzola', 'onion', 'olive',
                    'pepper', 'garlic', 'basil', 'mushroom', 'cheddar', 'oregano')
 
+ALL_SAUCES = ('tomato', 'cream')
+
 
 class UnknownIngredientException(Exception):
     def __init__(self, ingredient: str):
@@ -17,13 +19,37 @@ class NotEnoughException(Exception):
     pass
 
 
+class NotEnoughSauceException(NotEnoughException):
+    pass
+
+
+class NotEnoughIngredientException(NotEnoughException):
+    pass
+
+
 class Fridge:
-    def __init__(self, default: int = 0):
-        self._ingredients: Dict[str, int] = dict.fromkeys(ALL_INGREDIENTS, default)
+    def __init__(self, default_ingredients: int = 0, default_sauce: int = 4):
+        if default_ingredients < 0:
+            default_ingredients = 0
+        if default_sauce < 0:
+            default_sauce = 0
+        self._ingredients: Dict[str, int] = dict.fromkeys(ALL_INGREDIENTS, default_ingredients)
+        self._sauces: Dict[str, int] = dict.fromkeys(ALL_SAUCES, default_sauce)
 
     @property
     def is_empty(self) -> bool:
         return all(v == 0 for v in self._ingredients.values())
+
+    def use_sauce(self, name: str):
+        if name not in self._sauces:
+            raise UnknownIngredientException('sauce ' + name)
+        if self._sauces[name] < 1:
+            raise NotEnoughSauceException()
+        self._sauces[name] -= 1
+
+    def refill_sauce(self, amount: int = 4):
+        for key in self._sauces.keys():
+            self._sauces[key] = amount
 
     def add_ingredient(self, name: str, amount: int) -> None:
         if name not in self._ingredients:
@@ -40,7 +66,7 @@ class Fridge:
         if name not in self._ingredients:
             raise UnknownIngredientException(name)
         if self._ingredients[name] < amount:
-            raise NotEnoughException(name)
+            raise NotEnoughIngredientException(name)
         if amount <= 0:
             raise ValueError('Amount should be positive')
         self._ingredients[name] -= amount
@@ -50,7 +76,7 @@ class Fridge:
         for name, amount in ingredients.items():
             try:
                 self.use_ingredient(name, amount)
-            except NotEnoughException as e:
+            except NotEnoughIngredientException as e:
                 self.add_multiple_ingredients(taken)  # Replace taken ingredients
                 raise e
             else:
