@@ -56,4 +56,4 @@ class TestFullMakingGain(TestCase):
     def test_many_customer(self):
         maker = PizzaMaker(Fridge(20))
         gain = self.__customer(maker, 100)
-        self.assertEqual(gain, maker.total_gain)
+        self.assertEqual(gain, maker.total_gain, msg='The gain is not cancelled')
