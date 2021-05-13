@@ -14,20 +14,22 @@ class UnknownIngredientException(Exception):
 
 
 class NotEnoughException(Exception):
-    def __init__(self, ingredient: str):
-        self._ingredient = ingredient
-
-    def __str__(self):
-        return f'Not enough "{self._ingredient}"'
+    pass
 
 
 class Fridge:
     def __init__(self, default: int = 0):
         self._ingredients: Dict[str, int] = dict.fromkeys(ALL_INGREDIENTS, default)
 
+    @property
+    def is_empty(self) -> bool:
+        return all(v == 0 for v in self._ingredients.values())
+
     def add_ingredient(self, name: str, amount: int) -> None:
         if name not in self._ingredients:
-            self._ingredients[name] = 0
+            raise UnknownIngredientException(name)
+        if amount <= 0:
+            raise ValueError('Amount should be positive')
         self._ingredients[name] += amount
 
     def add_multiple_ingredients(self, ingredients: Dict[str, int]):
@@ -39,6 +41,8 @@ class Fridge:
             raise UnknownIngredientException(name)
         if self._ingredients[name] < amount:
             raise NotEnoughException(name)
+        if amount <= 0:
+            raise ValueError('Amount should be positive')
         self._ingredients[name] -= amount
 
     def use_multiple_ingredients(self, ingredients: Dict[str, int]) -> None:

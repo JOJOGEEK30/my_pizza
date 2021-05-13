@@ -1,11 +1,11 @@
 
 RECIPES = {
     'margherita': {
-        'ingredients': {'mozarella': 2, 'oregano': 4},
+        'ingredients': {'mozzarella': 2, 'oregano': 4},
         'price': 10,
     },
     'marinara': {
-        'ingredients': {'galic': 2, 'basil': 3},
+        'ingredients': {'garlic': 2, 'basil': 3},
         'price': 9,
     },
     'quattro fromagi': {
@@ -25,7 +25,7 @@ RECIPES = {
         'price': 12,
     },
     'original': {
-        'ingredients': {'galic': 5, 'pepper': 4, 'parmesan': 2},
+        'ingredients': {'garlic': 5, 'pepper': 4, 'parmesan': 2},
         'price': 10,
     },
     'ultima': {

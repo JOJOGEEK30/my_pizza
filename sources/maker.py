@@ -10,6 +10,10 @@ class PizzaMaker:
         self._fridge: Fridge = fridge
         self._gain: int = 0
 
+    @property
+    def total_gain(self) -> int:
+        return self._gain
+
     def __try_to_get_ingredients(self, ingredients: Dict[str, int]) -> Optional[str]:
         try:
             self._fridge.use_multiple_ingredients(ingredients)
@@ -19,7 +23,7 @@ class PizzaMaker:
 
     def take_an_order(self, name: str) -> Tuple[bool, Optional[str]]:
         if name not in RECIPES:
-            return False, 'I dont\'t know this pizza'
+            return False, 'I don\'t know this pizza'
         ingredients = RECIPES[name]['ingredients']
         price = RECIPES[name]['price']
         self._gain += price  # Gain money
