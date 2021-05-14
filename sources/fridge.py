@@ -3,6 +3,7 @@ from typing import Dict
 
 ALL_INGREDIENTS = ('ham', 'mozzarella', 'parmesan', 'gorgonzola', 'onion', 'olive',
                    'pepper', 'garlic', 'basil', 'mushroom', 'cheddar', 'oregano')
+ALL_COSTS = (1.2, 0.7, 0.6, 1.0, 0.5, 0.2, 0.8, 0.6, 0.4, 0.5, 0.5, 0.6)
 
 
 class UnknownIngredientException(Exception):
@@ -67,4 +68,8 @@ class Fridge:
 
     @property
     def ingredient_used(self) -> Dict[str, int]:
-        return self._count
+        return self._count.copy()
+
+    def reset_count(self):
+        for k in self._count.keys():
+            self._count[k] = 0

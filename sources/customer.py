@@ -26,5 +26,6 @@ def handle_days(amount: int, maker: PizzaMaker, customer_amount: int = 10):
         print('===  Day {:02d}        ==='.format(day_id + 1))
         handle_customer_queue(customer_amount, maker)
         maker.buy_ingredients()
+        print('>>> Gain:', maker.total_gain)
         print('=== End of the day ===')
     pass
