@@ -31,3 +31,6 @@ class PizzaMaker:
         if error is not None:
             return False, error
         return True, None
+
+    def buy_ingredients(self):
+        pass
