@@ -2,7 +2,7 @@
 import unittest
 
 from tests.test_maker import TestMaker, TestFullMakingGain
-from tests.test_fridge import TestFridge
+from tests.test_fridge import TestFridge, TestFridgeCount
 
 try:
     from tests.test_sauce import TestSauce

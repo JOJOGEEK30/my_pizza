@@ -1,6 +1,7 @@
 
 from unittest import TestCase
 
+from sources.maker import PizzaMaker
 from sources.fridge import (Fridge, ALL_INGREDIENTS, UnknownIngredientException,
                             NotEnoughException)
 
@@ -87,3 +88,21 @@ class TestFridge(TestCase):
         self.assertFalse(fridge.is_empty)
         fridge.use_multiple_ingredients(ingredients)
         self.assertTrue(fridge.is_empty)
+
+
+class TestFridgeCount(TestCase):
+    def test_cherry_picked(self):
+        fridge = Fridge(default=1)
+        maker = PizzaMaker(fridge)
+        self.assertTrue(hasattr(fridge, 'ingredient_used'),
+                        msg='Fridge count feature not picked')
+        self.assertFalse(hasattr(maker, 'buy_ingredients'),
+                         msg='Commit "Buy behavior" should have not been included')
+        self.assertFalse(hasattr(fridge, 'reset_count'),
+                         msg='Commit "Use the buy mechanism" should have not been included')
+        try:
+            fridge.use_ingredient(ALL_INGREDIENTS[0], 1, count=True)
+            if not fridge.ingredient_used[ALL_INGREDIENTS[0]] == 1:
+                raise TypeError()
+        except TypeError:
+            self.assertTrue(False, msg='Buy feature not correctly merged')
