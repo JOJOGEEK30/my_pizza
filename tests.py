@@ -3,6 +3,7 @@ import unittest
 
 from tests.test_maker import TestMaker, TestFullMakingGain
 from tests.test_fridge import TestFridge, TestFridgeCount
+from tests.test_pizza import TestPizza
 
 try:
     from tests.test_sauce import TestSauce

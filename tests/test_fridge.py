@@ -92,7 +92,7 @@ class TestFridge(TestCase):
 
 class TestFridgeCount(TestCase):
     def test_cherry_picked(self):
-        fridge = Fridge(default=1)
+        fridge = Fridge(1)
         maker = PizzaMaker(fridge)
         self.assertTrue(hasattr(fridge, 'ingredient_used'),
                         msg='Fridge count feature not picked')

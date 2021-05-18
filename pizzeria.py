@@ -5,7 +5,7 @@ from sources.customer import handle_customer_queue
 
 
 def main():
-    fridge = Fridge()
+    fridge = Fridge(15)
     maker = PizzaMaker(fridge)
     print('Maker: Welcome dear customer, the pizzeria is open !')
     try:
