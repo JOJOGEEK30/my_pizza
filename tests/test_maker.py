@@ -10,15 +10,6 @@ from sources.pizza import RECIPES
 class TestMaker(TestCase):
     PIZZA_NAMES = tuple(RECIPES.keys())
 
-    def test_success(self):
-        maker = PizzaMaker(Fridge(15))
-        total_gain = 0
-        for name in self.PIZZA_NAMES:
-            total_gain += RECIPES[name]['price']
-            status, _ = maker.take_an_order(name)
-            self.assertTrue(status)
-        self.assertEqual(total_gain, maker.total_gain)
-
     def test_not_enough(self):
         maker = PizzaMaker(Fridge())
         pizza_name = self.PIZZA_NAMES[0]
