@@ -20,6 +20,7 @@ class NotEnoughException(Exception):
 class Fridge:
     def __init__(self, default: int = 0):
         self._ingredients: Dict[str, int] = dict.fromkeys(ALL_INGREDIENTS, default)
+        self._count: Dict[str, int] = dict.fromkeys(ALL_INGREDIENTS, 0)
 
     @property
     def is_empty(self) -> bool:
@@ -36,14 +37,20 @@ class Fridge:
         for name, amount in ingredients.items():
             self.add_ingredient(name, amount)
 
-    def use_ingredient(self, name: str, amount: int):
+    def use_ingredient(self, name: str, amount: int, count: bool = False):
         if name not in self._ingredients:
             raise UnknownIngredientException(name)
         if self._ingredients[name] < amount:
             raise NotEnoughException(name)
         if amount <= 0:
             raise ValueError('Amount should be positive')
+        if count is True:
+            self.__count_as_used({name: amount})
         self._ingredients[name] -= amount
+
+    def __count_as_used(self, ingredients: Dict[str, int]):
+        for k, v in ingredients.items():
+            self._count[k] += v
 
     def use_multiple_ingredients(self, ingredients: Dict[str, int]) -> None:
         taken: Dict[str, int] = dict()
@@ -55,4 +62,9 @@ class Fridge:
                 raise e
             else:
                 taken[name] = amount
+        self.__count_as_used(ingredients)
         return
+
+    @property
+    def ingredient_used(self) -> Dict[str, int]:
+        return self._count
