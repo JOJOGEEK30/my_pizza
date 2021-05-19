@@ -13,6 +13,10 @@ def handle_customer_queue(amount: int, maker: PizzaMaker):
         print('Maker: Welcome to you Customer {:02d} !'.format(customer_id))
         pizza = pizzas[randint(0, max_idx)]
         print('Customer {:02d}: I want a "{}" please'.format(customer_id, pizza))
+        if randint(0, 3) == 0:
+            print('Maker: Nope, I don\'t want to serve you ! Next !')
+            print('Customer {:02d}: :\'('.format(customer_id))
+            continue
         status, message = maker.take_an_order(pizza)
         if not status:
             print('Maker: Sorry but', message)

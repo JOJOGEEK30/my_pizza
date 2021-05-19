@@ -16,7 +16,7 @@ class ValidationTests(unittest.TestCase):
         self.assertTrue(TestSauce is not None, msg='Sauce feature not found')
 
     def test_angry(self):
-        self.assertTrue(True, msg='There is a problem with the pizza maker')
+        self.assertTrue(False, msg='There is a problem with the pizza maker')
 
 
 if __name__ == '__main__':
